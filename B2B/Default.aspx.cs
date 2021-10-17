@@ -139,11 +139,15 @@ namespace B2B
             DeleteRow(id);
         }
         
-        private void DeleteRow(long id)
+        private void DeleteRow(long id = 0)
 		{
             using (SqlConnection con = new SqlConnection(constr))
             {
                 string sql = "Delete FROM temp_U_data_1 where Id = " + id;
+                if(id == 0)
+				{
+                    sql = "Delete FROM temp_U_data_1";
+                }
                 using (SqlCommand cmd = new SqlCommand(sql))
                 {
                     using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -207,7 +211,7 @@ namespace B2B
                     }
                 }
             ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Successfully added');", true);
-
+            DeleteRow();
         }
         protected void btnSearch_Click(object sender, EventArgs e)
         {
